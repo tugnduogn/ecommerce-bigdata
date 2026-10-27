@@ -1,0 +1,21 @@
+# Dữ liệu lớn - không đẩy lên GitHub
+data/raw/
+data/processed/
+*.csv
+*.xlsx
+*.parquet
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Hệ thống
+.DS_Store
+*.swp
