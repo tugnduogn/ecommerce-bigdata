@@ -27,13 +27,12 @@ print(f"Số dòng sau khi xóa trùng lặp: {df.count()}")
 # Chuyển ngày tháng sang datetime
 df = df.withColumn("InvoiceDate", to_timestamp("InvoiceDate", "dd/MM/yyyy HH:mm"))
 
-# Đếm số dòng ngày tháng lỗi
-invalid_date_count = df.filter(col("InvoiceDate").isNull()).count()
-print(f"Số dòng có ngày tháng không hợp lệ: {invalid_date_count}")
+# Thêm cột Revenue
+df = df.withColumn("Revenue", col("Quantity") * col("Price"))
 
-# Ghi ra Silver
+# Ghi ra Silver (ghi đè nếu đã tồn tại)
 df.write.mode("overwrite") \
   .parquet("hdfs://namenode:9000/ecommerce/silver/transactions_cleaned")
 
-print("=== Làm sạch hoàn tất ===")
+print("=== Làm sạch hoàn tất. Đã thêm cột Revenue ===")
 spark.stop()
