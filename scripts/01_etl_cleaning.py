@@ -24,15 +24,14 @@ df = df.toDF(*[c.strip().replace(" ", "_") for c in df.columns])
 df = df.dropDuplicates()
 print(f"Số dòng sau khi xóa trùng lặp: {df.count()}")
 
-# Chuyển ngày tháng sang datetime
-df = df.withColumn("InvoiceDate", to_timestamp("InvoiceDate", "dd/MM/yyyy HH:mm"))
+df = df.withColumn("InvoiceDate", to_timestamp("InvoiceDate", "yyyy-MM-dd HH:mm:ss"))
 
 # Thêm cột Revenue
 df = df.withColumn("Revenue", col("Quantity") * col("Price"))
 
-# Ghi ra Silver (ghi đè nếu đã tồn tại)
+# Ghi ra Silver
 df.write.mode("overwrite") \
   .parquet("hdfs://namenode:9000/ecommerce/silver/transactions_cleaned")
 
-print("=== Làm sạch hoàn tất. Đã thêm cột Revenue ===")
+print("=== Làm sạch hoàn tất ===")
 spark.stop()

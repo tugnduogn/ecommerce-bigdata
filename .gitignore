@@ -1,21 +1,20 @@
-# Dữ liệu lớn - không đẩy lên GitHub
-data/raw/
-data/processed/
-*.csv
-*.xlsx
-*.parquet
+# Log và file tạm
+logs/
 *.log
-
-# Python
+*.bak
+*.bak2
 __pycache__/
 *.pyc
+
+# Môi trường ảo và bí mật
 .venv/
 venv/
 .env
 
-# Jupyter
-.ipynb_checkpoints/
-
-# Hệ thống
+# IDE / hệ điều hành
+.vscode/
+.idea/
 .DS_Store
-*.swp
+
+# Bỏ comment dòng dưới nếu data quá nặng
+# data/

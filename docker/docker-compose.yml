@@ -83,11 +83,53 @@ services:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
+      - PYSPARK_PYTHON=python3
     ports:
       - "8081:8081"
     networks:
       - bigdata-net
 
+  streamlit:
+    build:
+      context: ..
+      dockerfile: Dockerfile.streamlit
+    container_name: streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../app.py:/app/app.py
+      - ../pages:/app/pages
+    depends_on:
+      - namenode
+      - spark-master
+    networks:
+      - bigdata-net
+  ml:
+    build:
+      context: ..
+      dockerfile: Dockerfile.ml
+    container_name: ml
+    depends_on:
+      - namenode
+      - datanode
+    networks:
+      - bigdata-net
+    command: tail -f /dev/null      # giữ container chạy nền
+    volumes:
+      - ../scripts/experiments/sklearn:/app
+  etl:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: etl
+    networks:
+      - bigdata-net
+    command: tail -f /dev/null
+    volumes:
+      - ../scripts:/app/scripts
+    environment:
+      - PYSPARK_PYTHON=python3
+      - PYSPARK_DRIVER_PYTHON=python3 
 volumes:
   namenode_data:
   datanode_data:
