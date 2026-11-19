@@ -6,16 +6,21 @@ cd "$(dirname "$0")/.."
 MLLIB=(
   01_linear_regression.py
   02_decision_tree.py
+  02_decision_tree_tuning.py
+  02_decision_tree_tuning_v1.py
+  02_decision_tree_tuning_v2.py
   03_random_forest.py
+  03_random_forest_tuning_v1.py
 )
 SKLEARN=(
   prepare_forecast.py
   01_linear_regression.py
   02_decision_tree.py
+  02_decision_tree_tuning_v1.py
   03_random_forest.py
+  03_random_forest_tuning_v1.py
   04_extra_trees.py
 )
-
 TARGET="${1:-all}"
 LOG_DIR="logs/experiments"
 mkdir -p "$LOG_DIR"
